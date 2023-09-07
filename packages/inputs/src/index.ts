@@ -369,6 +369,48 @@ const onLoad = function () {
           } catch (e) {
             console.error(e);
           }
+        } else if (event.data?.type == "revealClipboardTrigger") {
+          console.log(navigator.userActivation.isActive);
+          const queryOpts = { name: 'clipboard-write', allowWithoutGesture: false };
+          // @ts-ignore
+          const permissionStatus = await navigator.permissions.query(queryOpts);
+          // Will be 'granted', 'denied' or 'prompt':
+          console.log(permissionStatus.state);
+
+          if (!event.data.target || event.data.target == "cardNumber") {
+            console.log("Copying card number")
+            const cardNumber = inputElementsManager.masks.cardNumber.unmaskedValue;
+            navigator.clipboard.write([
+              new ClipboardItem({
+                "text/plain": new Blob([cardNumber], { type: "text/plain" }),
+              }),
+            ]);
+          } else if (event.data.target == "cvv") {
+            const cvv = inputElementsManager.elements.cvv?.value;
+            if (cvv) {
+              navigator.clipboard.writeText(cvv);
+            } else {
+              console.warn("No CVV found when trying to copy the CVV")
+            }
+          } else if (event.data.target == "expiry") {
+            const expiry = inputElementsManager.masks.expirationDate.unmaskedValue;
+
+            // navigator.clipboard.writeText(expiry);
+            // use document.execCommand('copy') instead
+
+            // Create a temporary input element
+            const tempInput = document.createElement("input");
+            tempInput.type = "text";
+            tempInput.value = expiry;
+            document.body.appendChild(tempInput);
+
+            // Select the text field
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999); /*For mobile devices*/
+
+            // Copy the text inside the text field
+            document.execCommand("copy");
+          }
         } else {
           updateInputLabels(event.data);
           errorLabels = updateErrorLabels(errorLabels, event.data);

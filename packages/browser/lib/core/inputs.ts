@@ -13,14 +13,14 @@ export default function Inputs(config: Config) {
       // TODO: add error check in a seperate pr (small behavour change)
       (
         document.getElementById(id) as HTMLIFrameElement
-      ).innerHTML = `<iframe src="${constructSource(
+      ).innerHTML = `<iframe allow="clipboard-read; clipboard-write" src="${constructSource(
         config,
         // TODO: better typings for this (will affect user facing typings)
         isReveal,
         settings
       )}" id="ev-iframe" title="Payment details" frameborder="0" scrolling="0" height=${calculateHeight(
         settings
-      )} allowTransparency="true"></iframe>`;
+        )} allowTransparency="true"></iframe>`;
 
       window.addEventListener("message", (event) => {
         if (event.origin !== config.input.inputsOrigin) return;
@@ -119,6 +119,24 @@ export default function Inputs(config: Config) {
             document.getElementById("ev-iframe") as HTMLIFrameElement
           ).contentWindow?.postMessage(labels, "*", [channel.port2]);
         },
+        revealClipboardTrigger: (target: string = "cardNumber") => {
+          (
+            document.getElementById("ev-iframe") as HTMLIFrameElement
+          ).focus();
+
+
+          // @ts-ignore
+          (
+            document.getElementById("ev-iframe") as HTMLIFrameElement
+          ).contentWindow?.postMessage(
+            {
+              type: "revealClipboardTrigger",
+              target
+            },
+            // @ts-ignore
+            '*'
+          );
+        }
       };
     },
   };

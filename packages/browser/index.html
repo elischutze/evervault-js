@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script type="module" src="scaffold.js"></script>
+    <script src="https://899e-2a09-bac1-3540-00-34-6a.ngrok-free.app/dist/evervault-browser.main.umd.cjs"></script>
+    <meta http-equiv="Permissions-Policy"
+      content="clipboard-read https://899e-2a09-bac1-3540-00-34-6a.ngrok-free.app; clipboard-write https://899e-2a09-bac1-3540-00-34-6a.ngrok-free.app">
+
   </head>
   <body>
     evervault Test Hello world
     <div id="ev-inputs"></div>
+    <script>
+      const evervault = new Evervault("team_c6967234821c", "app_60161f975e79", {
+        urls: {
+          inputsUrl: "https://whole-comics-jump.loca.lt/v2/",
+          inputsOrigin: "https://whole-comics-jump.loca.lt",
+          keysUrl: "https://keys.evervault.io",
+        },
+      });
+      const request = new Request(
+        "https://blackhole-posterior-io.relay.evervault.io/kq5xzb"
+      );
+      let outputs = evervault.reveal("ev-inputs", request);
+      outputs.isRevealLoaded.then(() => {
+        console.log("Reveal loaded");
+      });
+
+      function clipboardCopy() {
+        outputs.revealClipboardTrigger();
+      }
+    </script>
+    
+    <button onclick="clipboardCopy()">Copy</button>
   </body>
 </html>

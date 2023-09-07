@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script type="module" src="scaffold.jsx"></script>
+    <script src="../browser/dist/evervault-browser.main.umd.cjs"></script>
   </head>
   <body>
     evervault Test Hello world
-    <div id="ev-app"></div>
+    <div id="ev-inputs"></div>
+    <script>
+      const evervault = new Evervault("team_c6967234821c", "app_60161f975e79", {
+        urls: {
+          inputsUrl: "https://inputs.evervault.io/v2/index.html",
+          inputsOrigin: "https://inputs.evervault.io",
+          keysUrl: "https://keys.evervault.io",
+        },
+      });
+      const request = new Request(
+        "https://blackhole-posterior-io.relay.evervault.io/4m0s3d"
+      );
+      let outputs = evervault.reveal("ev-inputs", request);
+      outputs.isRevealLoaded.then(() => {
+        console.log("Reveal loaded");
+      });
+    </script>
   </body>
 </html>

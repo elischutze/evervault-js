@@ -175,6 +175,7 @@ export default class EvervaultClient {
     config?: Record<string, any>
   ): {
     isRevealLoaded: Promise<boolean>;
+      revealClipboardTrigger: (target: string) => void;
   } {
     let reveal = this.input.generate(
       elementId,
@@ -188,6 +189,7 @@ export default class EvervaultClient {
 
     return {
       isRevealLoaded: reveal.isInputsLoaded,
+      revealClipboardTrigger: reveal.revealClipboardTrigger,
     };
   }
 
