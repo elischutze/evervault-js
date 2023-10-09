@@ -69,6 +69,34 @@ const supportedProperties = [
     name: "revealTextColor",
     variable: "--reveal-color",
   },
+  {
+    name: "inputBorderColorFocus",
+    variable: "--input-border-color-focus",
+  },
+  {
+    name: "labelTransition",
+    variable: "--label-transition",
+  },
+  {
+    name: "labelTransformOrigin",
+    variable: "--label-transform-origin",
+  },
+  {
+    name: "labelTransformFocus",
+    variable: "--label-transform-focus",
+  },
+  {
+    name: "labelBackgroundColor",
+    variable: "--label-background-color",
+  },
+  {
+    name: "labelLeft",
+    variable: "--label-left",
+  },
+  {
+    name: "inputPadding",
+    variable: "--input-padding",
+  }
 ];
 
 export function urlStyles(urlParams: URLSearchParams): void {

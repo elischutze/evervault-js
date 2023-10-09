@@ -162,7 +162,7 @@ textarea {
 
   &:focus {
     z-index: 2;
-    border-color: var(--color-primary);
+    border-color: var(--input-border-color-focus, var(--color-primary));
     outline: 0;
   }
 }
@@ -273,7 +273,7 @@ textarea {
   }
 
   & .input-group:focus-within .absoluteLabel {
-    transform: translateY(-100%) scale(0.8);
+    transform: var(--label-transform-focus, translateY(-100%) scale(0.8));
     color: var(--color-primary);
   }
 
@@ -290,15 +290,15 @@ textarea {
     position: absolute;
     pointer-events: none;
     padding: 0 0.25rem;
-    left: 0.5rem;
+    left: var(--label-left, 0.5rem);
     z-index: 3;
     color: var(--input-placeholder);
     font-weight: var(--fw-regular);
     font-size: var(--label-font-size);
-    transform-origin: left center;
-    transition: 0.15s;
+    transform-origin: var(--label-transform-origin, left center);
+    transition: var(--label-transition, 0.15s);
     width: auto;
-    background: var(--input-background);
+    background: var(--label-background-color, var(--input-background));
     height: 50%;
     display: flex;
     align-items: center;
@@ -310,11 +310,11 @@ textarea {
       opacity: 0;
     }
     &:focus {
-      border-color: var(--color-primary);
+      border-color: var(--input-border-color-focus, var(--color-primary));
       box-shadow: none;
     }
     &:not(:placeholder-shown) + .absoluteLabel {
-      transform: translateY(-100%) scale(0.8);
+      transform: var(--label-transform-focus, translateY(-100%) scale(0.8));
       padding: 0 0.25rem;
     }
   }
