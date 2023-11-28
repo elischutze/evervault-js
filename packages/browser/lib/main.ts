@@ -9,9 +9,11 @@ import {
   deriveSharedSecret,
 } from "./utils";
 import type { InputSettings, RevealSettings } from "./types";
+import UIComponents from "./ui";
 
 export type * from "./config";
 export type * from "./types";
+export type * from "./ui/types";
 export type * from "./messages";
 export type { Datatypes };
 
@@ -45,6 +47,7 @@ export default class EvervaultClient {
 
   #debugMode;
   #cryptoPromise: Promise<CoreCrypto>;
+  ui: UIComponents;
 
   /**
    * The SDK constructor accepts two parameters:
@@ -88,6 +91,8 @@ export default class EvervaultClient {
     this.input = Input(this.config);
 
     this.#cryptoPromise = this.loadKeys();
+
+    this.ui = new UIComponents(this);
   }
 
   // TODO: make this private
