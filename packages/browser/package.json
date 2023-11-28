@@ -26,8 +26,8 @@
   },
   "scripts": {
     "build": "vite build",
+    "dev": "vite build --watch",
     "coverage": "vitest --coverage",
-    "dev": "vite",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
