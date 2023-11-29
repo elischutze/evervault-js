@@ -1,8 +1,9 @@
 import EvervaultClient from "../main";
 import CardDetails, { CardDetailsOptions } from "./cardDetails";
-import Pin, { PinOptions } from "./pin";
+import Pin from "./pin";
 import Reveal from "./reveal";
 import { themes } from "./themes";
+import type { PinOptions } from "./types";
 
 export default class UIComponents {
   client: EvervaultClient;
