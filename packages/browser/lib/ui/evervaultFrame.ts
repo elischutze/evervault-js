@@ -7,7 +7,7 @@ import {
 } from "./types";
 import { generateID, resolveSelector } from "./utils";
 
-const FRAME_URL = "http://localhost:4001";
+const FRAME_URL = import.meta.env.VITE_EVERVAULT_UI_COMPONENTS_URL;
 
 type FrameConfiguration = {
   theme?: ThemeDefinition;
@@ -23,10 +23,8 @@ type FrameOptions = {
 // that is used to render the component. It also handles communication between
 // the iframe and the parent window.
 export class EvervaultFrame<
-  ReceivableMessages extends
-    EvervaultFrameClientMessages = EvervaultFrameClientMessages,
-  SendableMessages extends
-    EvervaultFrameHostMessages = EvervaultFrameHostMessages,
+  ReceivableMessages extends EvervaultFrameClientMessages = EvervaultFrameClientMessages,
+  SendableMessages extends EvervaultFrameHostMessages = EvervaultFrameHostMessages
 > {
   iframe: HTMLIFrameElement;
   payload: any;
@@ -113,7 +111,7 @@ export class EvervaultFrame<
   // frame ID.
   on<K extends keyof ReceivableMessages>(
     event: K,
-    callback: (message: ReceivableMessages[K]) => void,
+    callback: (message: ReceivableMessages[K]) => void
   ) {
     const handleMessage = (e: MessageEvent) => {
       if (e.data.frame !== this.#id) return;
@@ -127,7 +125,7 @@ export class EvervaultFrame<
   // The send method is used to send messages to the iframe.
   send<K extends keyof SendableMessages>(
     type: K,
-    payload?: SendableMessages[K],
+    payload?: SendableMessages[K]
   ) {
     if (!this.iframe?.contentWindow) {
       console.error("iframe not loaded");

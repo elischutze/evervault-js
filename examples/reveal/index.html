@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="%VITE_EVERVAULT_JS_URL%"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="card" class="card-container">
+        <div class="card">
+          <div class="face front">
+            <div class="detail number">
+              <label>Card Number</label>
+              <div class="value">•••• •••• •••• ••••</div>
+            </div>
+
+            <div class="detail expiry">
+              <label>Expiry</label>
+              <div class="value">04/26</div>
+            </div>
+
+            <div class="detail cvc">
+              <label>CVC</label>
+              <div class="value">•••</div>
+            </div>
+          </div>
+
+          <div class="face back">
+            <div class="detail number">
+              <label>Card Number</label>
+              <div class="value"></div>
+            </div>
+
+            <div class="copy-number"></div>
+
+            <div class="detail expiry">
+              <label>Expiry</label>
+              <div class="value">04/26</div>
+            </div>
+
+            <div class="detail cvc">
+              <label>CVC</label>
+              <div class="value"></div>
+            </div>
+
+            <div class="copy-cvc"></div>
+          </div>
+        </div>
+      </div>
+
+      <button id="show-button">
+        <div class="icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-eye"
+          >
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </div>
+        <span class="text">Show Details</span>
+      </button>
+    </div>
+
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

@@ -112,6 +112,61 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
 
+  examples/collect-card-details:
+    dependencies:
+      '@evervault/browser':
+        specifier: workspace:*
+        version: link:../../packages/browser
+      '@evervault/ui-components':
+        specifier: workspace:*
+        version: link:../../packages/ui-components
+    devDependencies:
+      typescript:
+        specifier: ^5.0.2
+        version: 5.2.2
+      vite:
+        specifier: ^4.4.5
+        version: 4.5.0(@types/node@18.15.11)
+
+  examples/custom-theme:
+    dependencies:
+      '@evervault/browser':
+        specifier: workspace:*
+        version: link:../../packages/browser
+    devDependencies:
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      vite:
+        specifier: ^5.0.0
+        version: 5.0.4(@types/node@18.15.11)
+
+  examples/pin:
+    dependencies:
+      '@evervault/browser':
+        specifier: workspace:*
+        version: link:../../packages/browser
+    devDependencies:
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      vite:
+        specifier: ^5.0.0
+        version: 5.0.4(@types/node@18.15.11)
+
+  examples/reveal:
+    dependencies:
+      '@evervault/browser':
+        specifier: workspace:*
+        version: link:../../packages/browser
+    devDependencies:
+      typescript:
+        specifier: ^5.0.2
+        version: 5.2.2
+      vite:
+        specifier: ^4.4.5
+        version: 4.5.0(@types/node@18.15.11)
+
   examples/reveal-react:
     dependencies:
       '@evervault/react':
@@ -157,22 +212,6 @@ importers:
       vite:
         specifier: ^5.0.0
         version: 5.0.4(@types/node@18.15.11)
-
-  examples/ui-components:
-    dependencies:
-      '@evervault/browser':
-        specifier: workspace:*
-        version: link:../../packages/browser
-      '@evervault/ui-components':
-        specifier: workspace:*
-        version: link:../../packages/ui-components
-    devDependencies:
-      typescript:
-        specifier: ^5.0.2
-        version: 5.2.2
-      vite:
-        specifier: ^4.4.5
-        version: 4.5.0(@types/node@18.15.11)
 
   examples/ui-components-next-js:
     dependencies:

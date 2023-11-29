@@ -9,11 +9,28 @@ const dirs = fs
 
 select({
   message: "Which example do you want to run?",
-  choices: dirs.map((d) => ({
-    name: d.name,
-    value: d.name,
-  })),
-}).then((answer) => {
-  const cwd = path.join(__dirname, answer);
-  spawn("pnpm", ["dev"], { cwd, stdio: "inherit" });
+  choices: dirs.map((d) => {
+    const pkgJson = path.join(__dirname, d.name, "package.json");
+    const pkg = JSON.parse(fs.readFileSync(pkgJson, "utf-8"));
+    return {
+      name: d.name,
+      value: pkg.name,
+    };
+  }),
+}).then((example) => {
+  spawn(
+    "dotenv",
+    [
+      "--",
+      "turbo",
+      "dev",
+      "--filter",
+      "@evervault/ui-components",
+      "--filter",
+      `${example}...`,
+    ],
+    {
+      stdio: "inherit",
+    }
+  );
 });

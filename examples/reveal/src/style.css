@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
+
+body {
+  display: grid;
+  min-height: 100vh;
+  background: #f4f2f5;
+  place-items: center;
+}
+
+.container {
+  width: 460px;
+  padding: 30px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 60px rgb(0 0 0 / 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-container {
+  height: 220px;
+  perspective: 800px;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card-container.show .card {
+  transform: rotateY(180deg);
+}
+
+.face {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  position: absolute;
+  display: flex;
+  align-items: end;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  background: linear-gradient(128.92deg, #6633ee 5.72%, #7a45bf 96.14%);
+  box-shadow:
+    0 1px 3px rgb(0 0 0 / 0.1),
+    0 2px 10px rgb(0 0 0 / 0.1);
+}
+
+.face.back {
+  transform: rotateY(180deg);
+}
+
+.number {
+  left: 20px;
+  bottom: 70px;
+  position: absolute;
+}
+
+.copy-number {
+  left: 186px;
+  bottom: 68px;
+  position: absolute;
+}
+
+.copy-cvc {
+  left: 132px;
+  bottom: 18px;
+  position: absolute;
+}
+
+.expiry {
+  left: 20px;
+  bottom: 20px;
+  position: absolute;
+}
+
+.cvc {
+  left: 100px;
+  bottom: 20px;
+  position: absolute;
+}
+
+.detail {
+  gap: 4px;
+  color: white;
+  display: flex;
+  letter-spacing: 1px;
+  flex-direction: column;
+}
+
+label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-family: monospace;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.8);
+}
+
+#show-button {
+  border: none;
+  cursor: pointer;
+  appearance: none;
+  background: none;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  & .icon {
+    width: 50px;
+    height: 50px;
+    background: #eee;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+}
+
+.value {
+  font-size: 14px;
+  font-family: monospace;
+}
+
+@media (max-width: 800px) {
+  .container {
+    width: 90%;
+  }
+}
