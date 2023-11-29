@@ -28,6 +28,8 @@ export function CardExpiry({
       onAccept={onChange}
       placeholder={placeholder}
       blocks={EXPIRY_BLOCKS}
+      pattern="[0-9]*"
+      autoComplete="billing cc-exp"
     />
   );
 }

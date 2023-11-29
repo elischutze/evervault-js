@@ -25,6 +25,8 @@ export function CardCVC({
       onAccept={onChange}
       onBlur={onBlur}
       placeholder={placeholder}
+      pattern="[0-9]*"
+      autoComplete="billing cc-cvc"
     />
   );
 }
