@@ -156,6 +156,7 @@ function PinInput({
       disabled={disabled}
       aria-label={ariaLabel}
       autoFocus={autoFocus}
+      autoComplete="one-time-code"
     />
   );
 }
