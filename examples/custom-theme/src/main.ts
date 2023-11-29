@@ -97,7 +97,7 @@ card.on("ready", () => {
 
 const cardIcon = document.querySelector(".card-icon");
 card.on("change", (values) => {
-  console.log(values);
+  console.log("change", values);
   if (values.brand) {
     cardIcon.dataset.type = values.brand;
     cardIcon.classList.add("show");
@@ -109,7 +109,7 @@ card.on("change", (values) => {
 });
 
 card.on("swipe", (values) => {
-  console.log("SWIPED", values);
+  console.log("swipe", values);
 });
 
 card.mount("#card");

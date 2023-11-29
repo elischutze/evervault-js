@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 const TRACK_ONE = /^%B(\d{1,19})\^([A-Z\s/]{2,26})\^(\d{2})(\d{2})\d{3}.+\?/;
 const TRACK_TWO = /^;(\d{1,19})=(\d{2})(\d{2})\d{3}(.+)\?/;
@@ -11,35 +11,46 @@ export type MagStripeData = {
   lastName?: string;
 };
 
-// Some readers will emit shift and enter keys that we want to ignore.
-const IGNORED_KEYS = ["Shift", "Enter"];
+// Some readers will emit meta keys that we want to ignore.
+const IGNORED_KEYS = ["Meta", "Shift", "Enter"];
 
 // Custom hook to read card data from a mag stripe card reader.
 // The callback will be called with the card data when a card is swiped.
 export function useCardReader(callback: (data: MagStripeData) => void) {
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const data = useRef("");
+  const [listening, setListening] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useLayoutEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (timer.current) clearTimeout(timer.current);
+      const isIgnoredKey = IGNORED_KEYS.includes(event.key);
 
-      if (!IGNORED_KEYS.includes(event.key)) {
-        data.current += event.key;
+      // Start listening if the pressed key is the first character of either
+      // the track one or track two format.
+      if (!listening && !isIgnoredKey && [";", "%"].includes(event.key)) {
+        setListening(true);
+        data.current = event.key;
       }
 
-      timer.current = setTimeout(() => {
-        const card = parseMagStripe(data.current);
-        if (card) callback(card);
-        data.current = "";
-      }, 100);
+      if (listening) {
+        if (!isIgnoredKey) data.current += event.key;
+        if (timer.current) clearTimeout(timer.current);
+        timer.current = setTimeout(() => {
+          setListening(false);
+          const card = parseMagStripe(data.current);
+          data.current = "";
+          if (card) callback(card);
+        }, 200);
+      }
     };
 
     document.addEventListener("keydown", handleKeyDown, true);
     return () => {
       document.removeEventListener("keydown", handleKeyDown, true);
     };
-  }, [callback]);
+  }, [listening, callback]);
+
+  return listening;
 }
 
 function parseMagStripe(data: string): MagStripeData | null {

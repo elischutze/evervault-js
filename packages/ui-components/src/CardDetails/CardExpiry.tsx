@@ -8,12 +8,14 @@ export function CardExpiry({
   disabled,
   placeholder,
   value,
+  readOnly,
 }: {
   onChange: (value: CardDetailsForm["expiry"]) => void;
   onBlur?: () => void;
   disabled: boolean;
   placeholder?: string;
   value: string;
+  readOnly?: boolean;
 }) {
   return (
     <IMaskInput
@@ -30,6 +32,7 @@ export function CardExpiry({
       blocks={EXPIRY_BLOCKS}
       pattern="[0-9]*"
       autoComplete="billing cc-exp"
+      readOnly={readOnly}
     />
   );
 }

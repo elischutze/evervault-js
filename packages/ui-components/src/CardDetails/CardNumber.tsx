@@ -7,6 +7,7 @@ export function CardNumber({
   onBlur,
   placeholder,
   value,
+  readOnly,
 }: {
   disabled?: boolean;
   autoFocus?: boolean;
@@ -14,6 +15,7 @@ export function CardNumber({
   onBlur?: () => void;
   placeholder: string;
   value: string;
+  readOnly?: boolean;
 }) {
   return (
     <IMaskInput
@@ -22,6 +24,7 @@ export function CardNumber({
       id="number"
       name="number"
       value={value}
+      readOnly={readOnly}
       mask="0000 0000 0000 0000 000"
       inputMode="numeric"
       onAccept={onChange}

@@ -2,7 +2,6 @@ import { IMaskInput } from "react-imask";
 import {
   ClipboardEvent,
   useCallback,
-  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,

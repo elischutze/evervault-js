@@ -1,5 +1,5 @@
 import cardValidator from "card-validator";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { Field } from "../Common/Field";
 import { useForm } from "../utilities/useForm";
 import { CardCVC } from "./CardCVC";
@@ -35,6 +35,7 @@ type CardDetailsConfig = {
 };
 
 export function CardDetails({ config }: { config: CardDetailsConfig }) {
+  const cvc = useRef<HTMLInputElement | null>(null);
   const { on, send } = useMessaging<
     CardDetailsFrameHostMessages,
     CardDetailsFrameClientMessages
@@ -81,7 +82,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
     },
   });
 
-  useCardReader((card) => {
+  const cardReaderListening = useCardReader((card) => {
     form.setValues({
       number: card.number,
       expiry: `${card.month}/${card.year}`,
@@ -95,6 +96,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
     }
 
     triggerSwipe();
+    cvc.current?.focus();
   });
 
   useLayoutEffect(() => {
@@ -126,6 +128,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
           <label htmlFor="number">{t("number.label")}</label>
           <CardNumber
             disabled={!config}
+            readOnly={cardReaderListening}
             autoFocus={config.autoFocus}
             placeholder={t("number.placeholder")}
             value={form.values.number}
@@ -150,6 +153,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
           <CardExpiry
             value={form.values.expiry}
             disabled={!config}
+            readOnly={cardReaderListening}
             placeholder={t("expiry.placeholder")}
             {...form.register("expiry")}
           />
@@ -170,8 +174,10 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
         >
           <label htmlFor="cvc">{t("cvc.label")}</label>
           <CardCVC
+            ref={cvc}
             value={form.values.cvc}
             disabled={!config}
+            readOnly={cardReaderListening}
             placeholder={t("cvc.placeholder")}
             {...form.register("cvc")}
           />

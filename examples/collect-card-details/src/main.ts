@@ -12,7 +12,11 @@ const card = evervault.ui.cardDetails({
 });
 
 card.on("change", (values) => {
-  console.log(values);
+  console.log("change", values);
+});
+
+card.on("swipe", (values) => {
+  console.log("swipe", values);
 });
 
 card.mount("#form");
