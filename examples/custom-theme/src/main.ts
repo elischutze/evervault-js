@@ -108,6 +108,10 @@ card.on("change", (values) => {
   }
 });
 
+card.on("ready", () => {
+  console.log("component is ready");
+});
+
 card.on("swipe", (values) => {
   console.log("swipe", values);
 });

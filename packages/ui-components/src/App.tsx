@@ -23,6 +23,7 @@ const COMPONENTS = {
 };
 
 export default function App() {
+  const initialized = useRef(false);
   const styles = useRef<StyleSheet | null>(null);
   const [theme, setTheme] = useState<CompiledTheme | null>(null);
   const [config, setConfig] = useState<any | null>(null);
@@ -36,6 +37,8 @@ export default function App() {
   useLayoutEffect(resize);
 
   useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
     // Send a message to the parent window to let it know that the frame is ready
     // to recieve configuration.
     send("EV_FRAME_HANDSHAKE");
