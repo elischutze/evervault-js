@@ -26,7 +26,8 @@
   },
   "scripts": {
     "build": "vite build",
-    "dev": "vite build --watch",
+    "dev": "vite build --watch & pnpm preview",
+    "preview": "wait-on dist/ && vite preview --port 4004",
     "coverage": "vitest --coverage",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -34,7 +35,8 @@
     "lint:fix": "eslint --fix .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo && rm -rf dist"
   },
   "license": "MIT",
   "dependencies": {
@@ -50,6 +52,7 @@
     "tsconfig": "workspace:^",
     "vite": "^4.5.0",
     "vite-plugin-dts": "^3.6.3",
-    "vitest": "^0.29.8"
+    "vitest": "^0.29.8",
+    "wait-on": "^7.2.0"
   }
 }

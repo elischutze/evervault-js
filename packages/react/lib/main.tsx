@@ -7,6 +7,10 @@ import type {
 } from "@evervault/browser";
 import * as React from "react";
 
+export { Reveal } from "./ui/Reveal";
+export { CardDetails } from "./ui/CardDetails";
+export { Pin } from "./ui/Pin";
+
 export interface CustomConfig extends BrowserConfig {
   jsSdkUrl: string;
 }
@@ -45,12 +49,9 @@ export const EvervaultContext =
 const EVERVAULT_URL = "https://js.evervault.com/v2";
 function injectScript(overrideUrl?: string) {
   const script = document.createElement("script");
-
-  if (overrideUrl) {
-    script.src = overrideUrl;
-  } else {
-    script.src = EVERVAULT_URL;
-  }
+  const src =
+    overrideUrl || import.meta.env.VITE_EVERVAULT_JS_URL || EVERVAULT_URL;
+  script.src = src;
 
   const headOrBody = document.head || document.body;
 

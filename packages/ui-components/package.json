@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "wait-on ../browser/dist && vite",
     "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "clean": "rm -rf .turbo && rm -rf dist"
   },
   "dependencies": {
     "@evervault/browser": "workspace:*",
@@ -34,6 +34,7 @@
     "jsdom": "^22.1.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vite-plugin-istanbul": "^5.0.0"
+    "vite-plugin-istanbul": "^5.0.0",
+    "wait-on": "^7.2.0"
   }
 }

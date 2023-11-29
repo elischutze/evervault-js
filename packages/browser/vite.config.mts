@@ -8,6 +8,7 @@ export default defineConfig({
     include: ["**/test/**/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
   },
   build: {
+    sourcemap: "inline",
     lib: {
       // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, "lib/main.ts"),
@@ -18,7 +19,7 @@ export default defineConfig({
   },
   plugins: [
     dts({
-      rollupTypes: true,
+      insertTypesEntry: true,
     }),
   ],
 });

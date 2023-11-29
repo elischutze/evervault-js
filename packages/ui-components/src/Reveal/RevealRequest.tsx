@@ -49,7 +49,7 @@ export function RevealRequest({ config }: { config: RevealRequestConfig }) {
           referrer: config.request.referrer,
           referrerPolicy: config.request.referrerPolicy,
           headers: config.request.headers,
-          body: config.request.body,
+          body: config.request.body ? config.request.body : undefined,
         });
 
         const d = await response.json();
@@ -58,6 +58,7 @@ export function RevealRequest({ config }: { config: RevealRequestConfig }) {
         setData(d);
         messages.send("EV_REVEAL_REQUEST_READY");
       } catch (e) {
+        console.error(e);
         messages.send("EV_ERROR");
       }
     }

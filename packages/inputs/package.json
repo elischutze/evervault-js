@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo && rm -rf dist"
   },
   "engines": {
     "node": "^18",
@@ -28,10 +29,11 @@
     "start-server-and-test": "^2.0.0",
     "tsconfig": "workspace:^",
     "vite": "^4.5.0",
-    "vite-plugin-dts": "^3.6.3"
+    "vite-plugin-dts": "^3.6.3",
+    "wait-on": "^7.2.0"
   },
   "dependencies": {
-    "@evervault/browser": "workspace:^2.14.2",
+    "@evervault/browser": "workspace:*",
     "card-validator": "^8.1.1",
     "credit-card-type": "^9.1.0",
     "imask": "^6.6.1"

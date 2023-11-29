@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDotEnv": [".env"],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
@@ -7,7 +8,10 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dotEnv": [".env"],
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
     },
     "e2e:test": {
       "dependsOn": ["build"],

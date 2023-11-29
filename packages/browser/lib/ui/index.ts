@@ -6,6 +6,7 @@ import { themes } from "./themes";
 
 export default class UIComponents {
   client: EvervaultClient;
+  themes = themes;
 
   constructor(client: EvervaultClient) {
     this.client = client;
@@ -21,9 +22,5 @@ export default class UIComponents {
 
   reveal(request: Request) {
     return new Reveal(this.client.config.appId, request);
-  }
-
-  get themes() {
-    return themes;
   }
 }

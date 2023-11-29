@@ -1,17 +1,17 @@
 {
   "private": true,
   "version": null,
-  "name": "@evervault/browser-e2e-tests",
+  "name": "e2e-tests-browser-e2e-tests",
   "scripts": {
     "dev:test": "playwright test",
-    "e2e:test": "start-server-and-test \"(cd ../../e2e-apps/decrypt-backend && pnpm run start)\" http://localhost:3010 \"playwright test\"",
+    "e2e:test": "start-server-and-test \"(cd ../../e2e-apps-decrypt-backend && pnpm run start)\" http://localhost:3010 \"playwright test\"",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "dependencies": {
     "@playwright/test": "^1.33.0",
     "start-server-and-test": "^2.0.0",
-    "@evervault/e2e-decrypt-backend": "workspace:*",
-    "@evervault/browser-e2e-app": "workspace:*"
+    "e2e-apps-e2e-decrypt-backend": "workspace:*",
+    "e2e-apps-browser-e2e-app": "workspace:*"
   }
 }

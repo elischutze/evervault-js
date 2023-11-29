@@ -91,6 +91,14 @@ export type CardDetailsTranslations = {
   cvc: CardFieldTranslations<{ invalid?: string }>;
 };
 
+export type PinOptions = {
+  theme?: ThemeDefinition;
+  length?: number;
+  autoFocus?: boolean;
+  mode?: "numeric" | "alphanumeric";
+  inputType?: "number" | "text" | "password";
+};
+
 export type PinPayload = {
   isComplete: boolean;
   value: string | null;

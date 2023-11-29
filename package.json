@@ -2,8 +2,8 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev": "turbo run dev --filter @evervault/*",
-    "build": "turbo run build",
+    "dev": "dotenv -- node ./examples/index.js",
+    "build": "turbo run build --filter @evervault/*",
     "build:browser": "dotenv -- turbo run build --filter=browser",
     "build:inputs": "dotenv -- turbo run build --filter=inputs",
     "test": "dotenv -- turbo run test",
@@ -16,7 +16,7 @@
     "e2e:test:browser": "dotenv -- turbo run e2e:test --filter=browser",
     "ci:prune:browser": "turbo prune --scope=\"browser\" --docker",
     "version": "changeset version && pnpm install --no-frozen-lockfile",
-    "example": "node ./examples/index.js"
+    "clean": "pnpm -r clean"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",

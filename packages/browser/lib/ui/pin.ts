@@ -1,19 +1,11 @@
 import type {
   PinPayload,
-  ThemeDefinition,
   SelectorType,
   PinFrameClientMessages,
   EvervaultFrameHostMessages,
+  PinOptions,
 } from "./types";
 import { EvervaultFrame } from "./evervaultFrame";
-
-export type PinOptions = {
-  theme?: ThemeDefinition;
-  length?: number;
-  autoFocus?: boolean;
-  mode?: "numeric" | "alphanumeric";
-  inputType?: "number" | "text" | "password";
-};
 
 export default class Pin {
   values: any = {};

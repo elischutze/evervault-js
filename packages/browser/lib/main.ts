@@ -270,4 +270,8 @@ export default class EvervaultClient {
   isInDebugMode() {
     return this.#debugMode;
   }
+
+  get test() {
+    return 123412341234;
+  }
 }

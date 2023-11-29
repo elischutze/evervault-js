@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@evervault/e2e-decrypt-backend",
+  "name": "e2e-apps-e2e-decrypt-backend",
   "version": null,
   "engines": {
     "node": "~18",
@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@evervault/browser-e2e-app": "workspace:*",
+    "e2e-apps-browser-e2e-app": "workspace:*",
     "@evervault/sdk": "^4.2.0",
     "serve-handler": "^6.1.5"
   }
