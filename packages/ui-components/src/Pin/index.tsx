@@ -70,21 +70,19 @@ export function Pin({ config }: { config: PinConfig }) {
   const handleChange = (value: string) => {
     if (pin.length >= length) return;
     const newPin = pin + value;
-    setPin(newPin);
-  };
 
-  useEffect(() => {
     const publishChange = async () => {
       if (!ev) return;
-      const encrypted = await ev.encrypt(pin);
+      const encrypted = await ev.encrypt(newPin);
       messages.send("EV_CHANGE", {
-        isComplete: pin.length === length,
+        isComplete: newPin.length === length,
         value: encrypted,
       });
     };
 
     publishChange();
-  }, [ev, length, messages, pin]);
+    setPin(newPin);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Backspace") {
