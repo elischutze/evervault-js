@@ -9,7 +9,7 @@ import {
 } from "react";
 import { Field } from "../Common/Field";
 import type {
-  CompiledTheme,
+  ThemeObject,
   EvervaultFrameHostMessages,
   PinFrameClientMessages,
 } from "@evervault/browser";
@@ -27,7 +27,7 @@ const MODES = {
 
 type PinConfig = {
   autoFocus?: boolean;
-  theme?: CompiledTheme;
+  theme?: ThemeObject;
   length?: number;
   mode?: "numeric" | "alphanumeric";
   inputType?: "number" | "text" | "password";

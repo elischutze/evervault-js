@@ -5,7 +5,7 @@ import { useBroadcastChannel } from "../utilities/useBroadcastChannel";
 import { RevealBroadcastMessages } from "./RevealRequest";
 import type {
   RevealFormat,
-  CompiledTheme,
+  ThemeObject,
   EvervaultFrameHostMessages,
   RevealConsumerClientMessages,
 } from "@evervault/browser";
@@ -14,7 +14,7 @@ import { resolveJSONPath } from "./utils";
 type RevealTextConfig = {
   channel: string;
   path: string;
-  theme?: CompiledTheme;
+  theme?: ThemeObject;
   format?: RevealFormat;
 };
 

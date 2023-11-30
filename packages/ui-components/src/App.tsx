@@ -1,5 +1,5 @@
 import jss, { JssStyle, StyleSheet } from "jss";
-import type { CompiledTheme } from "@evervault/browser";
+import type { ThemeObject } from "@evervault/browser";
 import { EvervaultProvider } from "@evervault/react";
 import preset from "jss-preset-default";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -25,7 +25,7 @@ const COMPONENTS = {
 export default function App() {
   const initialized = useRef(false);
   const styles = useRef<StyleSheet | null>(null);
-  const [theme, setTheme] = useState<CompiledTheme | null>(null);
+  const [theme, setTheme] = useState<ThemeObject | null>(null);
   const [config, setConfig] = useState<any | null>(null);
   const { on, send } = useMessaging();
   const { team, app, component } = useSearchParams();
@@ -55,7 +55,9 @@ export default function App() {
   useEffect(() => {
     return on("EV_UPDATE", (payload) => {
       setTheme(payload.theme || null);
-      setConfig(payload.config);
+      if (typeof payload.config !== "undefined") {
+        setConfig(payload.config);
+      }
     });
   }, [on]);
 

@@ -2,11 +2,12 @@ import { useLayoutEffect, useMemo, useRef } from "react";
 
 type FieldProps = {
   name?: string;
+  hasValue?: boolean;
   error?: false | string;
   children: React.ReactNode;
 };
 
-export function Field({ name, error, children }: FieldProps) {
+export function Field({ name, error, children, hasValue }: FieldProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const isValid = useMemo(() => !error, [error]);
@@ -24,9 +25,9 @@ export function Field({ name, error, children }: FieldProps) {
   return (
     <div
       ref={ref}
-      data-name={name}
       ev-name={name}
       ev-valid={isValid ? "true" : "false"}
+      ev-has-value={String(hasValue)}
       aria-invalid={!isValid}
       className="field"
     >

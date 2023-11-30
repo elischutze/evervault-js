@@ -3,7 +3,7 @@ import { resize } from "../utilities/resize";
 import { useMessaging } from "../utilities/useMessaging";
 import { useBroadcastChannel } from "../utilities/useBroadcastChannel";
 import {
-  CompiledTheme,
+  ThemeObject,
   RevealFormat,
   RevealConsumerClientMessages,
   EvervaultFrameHostMessages,
@@ -16,7 +16,7 @@ type RevealCopyButtonConfig = {
   path: string;
   text?: string;
   icon?: string;
-  theme?: CompiledTheme;
+  theme?: ThemeObject;
   format?: RevealFormat;
 };
 

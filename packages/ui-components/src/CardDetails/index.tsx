@@ -13,7 +13,7 @@ import { DEFAULT_TRANSLATIONS } from "./translations";
 import { useEvervault } from "@evervault/react";
 import { useMessaging } from "../utilities/useMessaging";
 import type {
-  CompiledTheme,
+  ThemeObject,
   CardDetailsField,
   CardDetailsTranslations,
   CardDetailsFrameClientMessages,
@@ -28,7 +28,7 @@ export type CardDetailsForm = {
 };
 
 type CardDetailsConfig = {
-  theme?: CompiledTheme;
+  theme?: ThemeObject;
   autoFocus?: boolean;
   hiddenFields?: CardDetailsField[];
   translations?: Partial<CardDetailsTranslations>;
@@ -116,10 +116,12 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
     <fieldset
       ev-component="cardDetails"
       ev-valid={hasErrors ? "false" : "true"}
+      ev-hidden-fields={config.hiddenFields || null}
     >
       {!hidden.includes("number") && (
         <Field
           name="number"
+          hasValue={form.values.number.length > 0}
           error={
             form.errors?.number && t(`number.errors.${form.errors.number}`)
           }
@@ -142,6 +144,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
       {!hidden.includes("expiry") && (
         <Field
           name="expiry"
+          hasValue={form.values.expiry.length > 0}
           error={
             form.errors?.expiry && t(`expiry.errors.${form.errors.expiry}`)
           }
@@ -163,6 +166,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
       {!hidden.includes("cvc") && (
         <Field
           name="cvc"
+          hasValue={form.values.cvc.length > 0}
           error={form.errors?.cvc && t(`cvc.errors.${form.errors.cvc}`)}
         >
           <label htmlFor="cvc">{t("cvc.label")}</label>

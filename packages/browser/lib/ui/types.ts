@@ -4,7 +4,7 @@ export type TranslationsObject = string | { [key: string]: TranslationsObject };
 
 export type ThemeStyles = Partial<Styles>;
 
-export type CompiledTheme = {
+export type ThemeObject = {
   fonts?: string[];
   styles?: ThemeStyles;
 };
@@ -13,9 +13,9 @@ export type ThemeUtilities = {
   media: (property: string, styles: ThemeStyles) => {};
 };
 
-export type ThemeFunction = (utilities: ThemeUtilities) => CompiledTheme;
+export type ThemeFunction = (utilities: ThemeUtilities) => ThemeObject;
 
-export type ThemeDefinition = CompiledTheme | ThemeFunction;
+export type ThemeDefinition = ThemeObject | ThemeFunction;
 
 export type SelectorType = string | HTMLElement;
 
@@ -59,11 +59,11 @@ export interface EvervaultFrameClientMessages {
 
 export interface EvervaultFrameHostMessages {
   EV_INIT: {
-    theme?: CompiledTheme;
+    theme?: ThemeObject;
     config?: Object;
   };
   EV_UPDATE: {
-    theme?: CompiledTheme;
+    theme?: ThemeObject;
     config?: Object;
   };
 }

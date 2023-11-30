@@ -2,24 +2,24 @@ import { CardDetailsTranslations } from "@evervault/browser";
 
 export const DEFAULT_TRANSLATIONS: CardDetailsTranslations = {
   number: {
-    label: "Number",
+    label: "Card number",
     placeholder: "0000 0000 0000 0000",
     errors: {
-      invalid: "Invalid card number",
+      invalid: "Your card number is invalid",
     },
   },
   expiry: {
-    label: "Expiry",
+    label: "Expiration",
     placeholder: "MM/YY",
     errors: {
-      invalid: "Invalid expiry date",
+      invalid: "Your expiration date is invalid",
     },
   },
   cvc: {
     label: "CVC",
-    placeholder: "123",
+    placeholder: "CVC",
     errors: {
-      invalid: "Invalid CVC",
+      invalid: "Your CVC is invalid",
     },
   },
 };
