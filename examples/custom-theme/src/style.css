@@ -274,10 +274,9 @@ body.ready .ticket {
   position: absolute;
   border-radius: 3px;
   opacity: 0;
+  pointer-events: none;
   transform: translateX(10px);
-  transition:
-    transform 0.4s ease-out,
-    opacity 0.4s ease-out;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
 
 .card-icon.show {

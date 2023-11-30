@@ -19,7 +19,7 @@ export type CardDetailsOptions = {
 };
 
 export default class CardDetails {
-  values: any = {};
+  values?: CardDetailsPayload;
   #options: CardDetailsOptions;
   #frame: EvervaultFrame<
     CardDetailsFrameClientMessages,

@@ -51,25 +51,26 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
       expiry: "",
       number: "",
     },
-    validate: (values) => {
-      const errors: Record<string, string> = {};
-
-      const cardValidation = cardValidator.number(values.number);
-      if (!cardValidation.isValid) {
-        errors.number = "invalid";
-      }
-
-      const expiry = cardValidator.expirationDate(values.expiry);
-      if (!expiry.isValid) {
-        errors.expiry = "invalid";
-      }
-
-      const validCVC = isCVCValid(values.cvc, cardValidation.card?.type);
-      if (!validCVC) {
-        errors.cvc = "invalid";
-      }
-
-      return errors;
+    validate: {
+      number: (values) => {
+        const cardValidation = cardValidator.number(values.number);
+        if (!cardValidation.isValid) {
+          return "invalid";
+        }
+      },
+      expiry: (values) => {
+        const expiry = cardValidator.expirationDate(values.expiry);
+        if (!expiry.isValid) {
+          return "invalid";
+        }
+      },
+      cvc: (values) => {
+        const cardValidation = cardValidator.number(values.number);
+        const validCVC = isCVCValid(values.cvc, cardValidation.card?.type);
+        if (!validCVC) {
+          return "invalid";
+        }
+      },
     },
     onChange: (form) => {
       const triggerChange = async () => {
@@ -120,9 +121,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
         <Field
           name="number"
           error={
-            form.errors?.number &&
-            form.touched.number &&
-            t(`number.errors.${form.errors.number}`)
+            form.errors?.number && t(`number.errors.${form.errors.number}`)
           }
         >
           <label htmlFor="number">{t("number.label")}</label>
@@ -134,7 +133,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
             value={form.values.number}
             {...form.register("number")}
           />
-          {form.errors?.number && form.touched.number && (
+          {form.errors?.number && (
             <Error>{t(`number.errors.${form.errors.number}`)}</Error>
           )}
         </Field>
@@ -144,9 +143,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
         <Field
           name="expiry"
           error={
-            form.errors?.expiry &&
-            form.touched.expiry &&
-            t(`expiry.errors.${form.errors.expiry}`)
+            form.errors?.expiry && t(`expiry.errors.${form.errors.expiry}`)
           }
         >
           <label htmlFor="expiry">{t("expiry.label")}</label>
@@ -157,7 +154,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
             placeholder={t("expiry.placeholder")}
             {...form.register("expiry")}
           />
-          {form.errors?.expiry && form.touched.expiry && (
+          {form.errors?.expiry && (
             <Error>{t(`expiry.errors.${form.errors.expiry}`)}</Error>
           )}
         </Field>
@@ -166,11 +163,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
       {!hidden.includes("cvc") && (
         <Field
           name="cvc"
-          error={
-            form.errors?.cvc &&
-            form.touched.cvc &&
-            t(`cvc.errors.${form.errors.cvc}`)
-          }
+          error={form.errors?.cvc && t(`cvc.errors.${form.errors.cvc}`)}
         >
           <label htmlFor="cvc">{t("cvc.label")}</label>
           <CardCVC
@@ -181,7 +174,7 @@ export function CardDetails({ config }: { config: CardDetailsConfig }) {
             placeholder={t("cvc.placeholder")}
             {...form.register("cvc")}
           />
-          {form.errors?.cvc && form.touched.cvc && (
+          {form.errors?.cvc && (
             <Error>{t(`cvc.errors.${form.errors.cvc}`)}</Error>
           )}
         </Field>
