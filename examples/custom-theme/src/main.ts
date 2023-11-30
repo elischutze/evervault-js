@@ -113,8 +113,11 @@ card.on("ready", () => {
   console.log("component is ready");
 });
 
+const holder = document.getElementById("holder");
 card.on("swipe", (values) => {
-  console.log("swipe", values);
+  if (values.firstName) {
+    holder.value = `${values.firstName} ${values.lastName}`;
+  }
 });
 
 card.mount("#card");

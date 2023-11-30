@@ -28,15 +28,17 @@ test.describe("cardDetails component", () => {
 
       const frame = page.frameLocator("iframe[data-evervault]");
       await frame.getByLabel("Number").fill(card.number);
-      await frame.getByLabel("Expiry").fill(`${card.month}/${card.year}`);
+      await frame.getByLabel("Expiration").fill(`${card.month}/${card.year}`);
       await frame.getByLabel("CVC").fill(card.cvc);
-      await expect.poll(async () => values.card.number).toBeEncrypted();
-      await expect.poll(async () => values.card.brand).toEqual(card.brand);
-      await expect.poll(async () => values.card.cvc).toBeEncrypted();
+      await expect.poll(async () => values.card?.number).toBeEncrypted();
+      await expect.poll(async () => values.card?.brand).toEqual(card.brand);
+      await expect.poll(async () => values.card?.cvc).toBeEncrypted();
       await expect
-        .poll(async () => values.card.expiry.month)
+        .poll(async () => values.card?.expiry?.month)
         .toEqual(card.month);
-      await expect.poll(async () => values.card.expiry.year).toEqual(card.year);
+      await expect
+        .poll(async () => values.card?.expiry?.year)
+        .toEqual(card.year);
       await expect.poll(async () => values.isValid).toBeTruthy();
       await expect.poll(async () => values.card.last4).toEqual(card.last4);
       await expect.poll(async () => values.errors).toBeNull();
@@ -64,11 +66,13 @@ test.describe("cardDetails component", () => {
     const frame = page.frameLocator("iframe[data-evervault]");
     await frame.getByLabel("Number").fill(testCard.number);
     await frame.getByLabel("Number").blur();
-    await expect(frame.getByText("Invalid card number")).toBeVisible();
+    await expect(frame.getByText("Your card number is invalid")).toBeVisible();
     await expect.poll(async () => values.errors.number).toEqual("invalid");
     await expect.poll(async () => values.isValid).toBeFalsy();
-    await expect(frame.getByText("Invalid expiry date")).not.toBeVisible();
-    await expect(frame.getByText("Invalid CVC")).not.toBeVisible();
+    await expect(
+      frame.getByText("Your expiration date is invalid")
+    ).not.toBeVisible();
+    await expect(frame.getByText("Your CVC is invalid")).not.toBeVisible();
   });
 
   test("Does not show an error message until the user has blurred away from the input", async ({
@@ -82,12 +86,14 @@ test.describe("cardDetails component", () => {
     const testCard = INVALID_CARDS.invalidNumber;
     const frame = page.frameLocator("iframe[data-evervault]");
     await frame.getByLabel("Number").fill(testCard.number);
-    await expect(frame.getByText("Invalid card number")).not.toBeVisible();
+    await expect(
+      frame.getByText("Your card number is invalid")
+    ).not.toBeVisible();
     await frame.getByLabel("Number").blur();
-    await expect(frame.getByText("Invalid card number")).toBeVisible();
+    await expect(frame.getByText("Your card number is invalid")).toBeVisible();
   });
 
-  test("shows an error message for an invalid expiry date", async ({
+  test("shows an error message for an invalid expiration date", async ({
     page,
   }) => {
     let values = {};
@@ -104,9 +110,13 @@ test.describe("cardDetails component", () => {
 
     const testCard = INVALID_CARDS.invalidExpiry;
     const frame = page.frameLocator("iframe[data-evervault]");
-    await frame.getByLabel("Expiry").fill(`${testCard.month}/${testCard.year}`);
-    await frame.getByLabel("Expiry").blur();
-    await expect(frame.getByText("Invalid expiry date")).toBeVisible();
+    await frame
+      .getByLabel("Expiration")
+      .fill(`${testCard.month}/${testCard.year}`);
+    await frame.getByLabel("Expiration").blur();
+    await expect(
+      frame.getByText("Your expiration date is invalid")
+    ).toBeVisible();
     await expect.poll(async () => values.errors.expiry).toEqual("invalid");
     await expect.poll(async () => values.isValid).toBeFalsy();
   });
@@ -128,7 +138,7 @@ test.describe("cardDetails component", () => {
     const frame = page.frameLocator("iframe[data-evervault]");
     await frame.getByLabel("CVC").fill(testCard.cvc);
     await frame.getByLabel("CVC").blur();
-    await expect(frame.getByText("Invalid CVC")).toBeVisible();
+    await expect(frame.getByText("Your CVC is invalid")).toBeVisible();
     await expect.poll(async () => values.errors.cvc).toEqual("invalid");
     await expect.poll(async () => values.isValid).toBeFalsy();
   });
@@ -218,7 +228,7 @@ test.describe("cardDetails component", () => {
 
     const frame = page.frameLocator("iframe[data-evervault]");
     await expect(frame.getByLabel("Number")).toBeVisible();
-    await expect(frame.getByLabel("Expiry")).not.toBeVisible();
+    await expect(frame.getByLabel("Expiration")).not.toBeVisible();
   });
 
   test("can manually trigger validation", async ({ page }) => {
@@ -234,7 +244,7 @@ test.describe("cardDetails component", () => {
 
     const frame = page.frameLocator("iframe[data-evervault]");
     await expect(frame.getByLabel("Number")).toBeVisible();
-    await expect(frame.getByText("Invalid card number")).toBeVisible();
+    await expect(frame.getByText("Your card number is invalid")).toBeVisible();
   });
 
   test("can update config after mount", async ({ page }) => {
@@ -246,7 +256,7 @@ test.describe("cardDetails component", () => {
     const frame = page.frameLocator("iframe[data-evervault]");
     await frame.getByLabel("Number").fill("424242424");
     await frame.getByLabel("Number").blur();
-    await expect(frame.getByText("Invalid card number")).toBeVisible();
+    await expect(frame.getByText("Your card number is invalid")).toBeVisible();
 
     await page.evaluate(() => {
       window.card.update({
