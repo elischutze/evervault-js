@@ -1,35 +1,34 @@
 import cardValidator from "card-validator";
 import { CardDetailsForm } from ".";
 import { UseFormReturn } from "../utilities/useForm";
-import type {
-  CardDetailsPayload,
-  SwipedCardDetails,
-} from "@evervault/browser";
+import type { CardDetailsPayload, SwipedCardDetails } from "@evervault/browser";
 import { MagStripeData } from "./useCardReader";
 import { PromisifiedEvervaultClient } from "@evervault/react";
 
 export async function changePayload(
   ev: PromisifiedEvervaultClient,
-  form: UseFormReturn<CardDetailsForm>,
+  form: UseFormReturn<CardDetailsForm>
 ): Promise<CardDetailsPayload> {
   const { number, expiry, cvc } = form.values;
   const brand = cardBrand(number);
 
   return {
-    brand,
-    number: await encryptedNumber(ev, number),
-    cvc: await encryptedCVC(ev, cvc, brand),
-    expiry: formatExpiry(expiry),
     isValid: form.isValid,
-    last4: last4(number),
-    bin: binNumber(number, brand),
+    card: {
+      brand,
+      number: await encryptedNumber(ev, number),
+      last4: last4(number),
+      bin: binNumber(number, brand),
+      expiry: formatExpiry(expiry),
+      cvc: await encryptedCVC(ev, cvc, brand),
+    },
     errors: Object.keys(form.errors || {}).length > 0 ? form.errors : null,
   };
 }
 
 export async function swipePayload(
   ev: PromisifiedEvervaultClient,
-  values: MagStripeData,
+  values: MagStripeData
 ): Promise<SwipedCardDetails> {
   return {
     brand: cardBrand(values.number),
@@ -81,7 +80,7 @@ async function encryptedNumber(ev: PromisifiedEvervaultClient, number: string) {
 async function encryptedCVC(
   ev: PromisifiedEvervaultClient,
   cvc: string,
-  brand?: string,
+  brand?: string
 ) {
   if (!isCVCValid(cvc, brand)) return null;
   return await ev.encrypt(cvc);
@@ -90,7 +89,7 @@ async function encryptedCVC(
 export function isCVCValid(cvc: string, brand?: string) {
   const { isValid } = cardValidator.cvv(
     cvc,
-    brand === "american-express" ? 4 : 3,
+    brand === "american-express" ? 4 : 3
   );
   return isValid;
 }

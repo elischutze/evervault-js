@@ -1,4 +1,4 @@
-import { Styles } from "jss";
+import type { Styles } from "jss";
 
 export type TranslationsObject = string | { [key: string]: TranslationsObject };
 
@@ -25,13 +25,15 @@ type CardExpiry = {
 };
 
 export type CardDetailsPayload = {
-  number: string | null;
-  brand: string | undefined;
-  cvc: string | null;
-  expiry: CardExpiry;
   isValid: boolean;
-  last4: string | null;
-  bin: string | null;
+  card: {
+    brand: string | undefined;
+    number: string | null;
+    last4: string | null;
+    bin: string | null;
+    expiry: CardExpiry;
+    cvc: string | null;
+  };
   errors: null | Partial<{
     number?: string;
     cvc?: string;

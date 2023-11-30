@@ -30,15 +30,17 @@ test.describe("cardDetails component", () => {
       await frame.getByLabel("Number").fill(card.number);
       await frame.getByLabel("Expiry").fill(`${card.month}/${card.year}`);
       await frame.getByLabel("CVC").fill(card.cvc);
-      await expect.poll(async () => values.number).toBeEncrypted();
-      await expect.poll(async () => values.brand).toEqual(card.brand);
-      await expect.poll(async () => values.cvc).toBeEncrypted();
-      await expect.poll(async () => values.expiry.month).toEqual(card.month);
-      await expect.poll(async () => values.expiry.year).toEqual(card.year);
+      await expect.poll(async () => values.card.number).toBeEncrypted();
+      await expect.poll(async () => values.card.brand).toEqual(card.brand);
+      await expect.poll(async () => values.card.cvc).toBeEncrypted();
+      await expect
+        .poll(async () => values.card.expiry.month)
+        .toEqual(card.month);
+      await expect.poll(async () => values.card.expiry.year).toEqual(card.year);
       await expect.poll(async () => values.isValid).toBeTruthy();
-      await expect.poll(async () => values.last4).toEqual(card.last4);
+      await expect.poll(async () => values.card.last4).toEqual(card.last4);
       await expect.poll(async () => values.errors).toBeNull();
-      await expect.poll(async () => values.bin).toEqual(card.bin);
+      await expect.poll(async () => values.card.bin).toEqual(card.bin);
       await expect.poll(async () => values.errors).toBeNull();
     });
   });
