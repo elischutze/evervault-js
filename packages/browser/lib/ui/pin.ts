@@ -6,6 +6,7 @@ import type {
   PinOptions,
 } from "./types";
 import { EvervaultFrame } from "./evervaultFrame";
+import EvervaultClient from "../main";
 
 export default class Pin {
   values: any = {};
@@ -13,9 +14,9 @@ export default class Pin {
   #frame: EvervaultFrame<PinFrameClientMessages, EvervaultFrameHostMessages>;
   #events: EventTarget = new EventTarget();
 
-  constructor(app: string, options?: PinOptions) {
+  constructor(client: EvervaultClient, options?: PinOptions) {
     this.#options = options || {};
-    this.#frame = new EvervaultFrame(app, "Pin");
+    this.#frame = new EvervaultFrame(client, "Pin");
 
     this.#frame.on("EV_CHANGE", (payload) => {
       this.values = payload;

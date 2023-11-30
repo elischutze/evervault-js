@@ -1,3 +1,4 @@
+import EvervaultClient from "../main";
 import { EvervaultFrame } from "./evervaultFrame";
 import Reveal from "./reveal";
 import {
@@ -23,11 +24,16 @@ export default class RevealText {
   >;
   #options: RevealTextOptions;
 
-  constructor(reveal: Reveal, path: string, options?: RevealTextOptions) {
+  constructor(
+    reveal: Reveal,
+    client: EvervaultClient,
+    path: string,
+    options?: RevealTextOptions
+  ) {
     this.path = path;
     this.#reveal = reveal;
     this.#options = options || {};
-    this.#frame = new EvervaultFrame(reveal.app, "RevealText");
+    this.#frame = new EvervaultFrame(client, "RevealText");
 
     this.#frame.on("EV_REVEAL_CONSUMER_READY", () => {
       this.ready = true;

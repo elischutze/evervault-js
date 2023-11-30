@@ -14,14 +14,14 @@ export default class UIComponents {
   }
 
   cardDetails(opts?: CardDetailsOptions) {
-    return new CardDetails(this.client.config.appId, opts);
+    return new CardDetails(this.client, opts);
   }
 
   pin(opts?: PinOptions) {
-    return new Pin(this.client.config.appId, opts);
+    return new Pin(this.client, opts);
   }
 
   reveal(request: Request) {
-    return new Reveal(this.client.config.appId, request);
+    return new Reveal(this.client, request);
   }
 }

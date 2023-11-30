@@ -1,3 +1,4 @@
+import EvervaultClient from "../main";
 import { Theme } from "./theme";
 import {
   EvervaultFrameClientMessages,
@@ -30,14 +31,20 @@ export class EvervaultFrame<
   payload: any;
   #id = generateID();
   #theme: Theme | null = null;
+  #client: EvervaultClient;
 
   // The constructor accepts the app and component name and generates the URL
   // for the iframe passing both as a query params. The component params is
   // used to determine which component to render in the iframe.
-  constructor(app: string, component: string, options?: FrameOptions) {
+  constructor(
+    client: EvervaultClient,
+    component: string,
+    options?: FrameOptions
+  ) {
+    this.#client = client;
     this.iframe = document.createElement("iframe");
     this.iframe.id = this.#id;
-    this.iframe.src = this.#generateUrl(app, component);
+    this.iframe.src = this.#generateUrl(component);
     this.iframe.dataset.evervault = "component";
     this.iframe.style.height = "0";
     this.iframe.style.border = "none";
@@ -140,10 +147,11 @@ export class EvervaultFrame<
     return !!this.iframe.parentNode;
   }
 
-  #generateUrl(app: string, component: string) {
+  #generateUrl(component: string) {
     const url = new URL(FRAME_URL);
     url.searchParams.set("id", this.#id);
-    url.searchParams.set("app", app);
+    url.searchParams.set("app", this.#client.config.appId);
+    url.searchParams.set("team", this.#client.config.teamId);
     url.searchParams.set("component", component);
     return url.toString();
   }

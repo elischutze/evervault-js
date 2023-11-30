@@ -1,4 +1,4 @@
-const KEYS_URL = "https://keys.evervault.com";
+const KEYS_URL = import.meta.env.VITE_KEYS_URL || "https://keys.evervault.com";
 const INPUTS_ORIGIN = "https://inputs.evervault.com";
 const API_URL = "https://api.evervault.com";
 

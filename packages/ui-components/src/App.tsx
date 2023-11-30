@@ -28,7 +28,7 @@ export default function App() {
   const [theme, setTheme] = useState<CompiledTheme | null>(null);
   const [config, setConfig] = useState<any | null>(null);
   const { on, send } = useMessaging();
-  const { app, component } = useSearchParams();
+  const { team, app, component } = useSearchParams();
 
   if (!app || !component) {
     throw new Error("Missing app or component");
@@ -87,7 +87,7 @@ export default function App() {
   }
 
   return (
-    <EvervaultProvider teamId="team_abf55a991645" appId="app_11c4429cb8a3">
+    <EvervaultProvider teamId={team} appId={app}>
       <Component config={config} />
     </EvervaultProvider>
   );

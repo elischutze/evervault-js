@@ -9,6 +9,7 @@ import {
 } from "./types";
 import { EvervaultFrame } from "./evervaultFrame";
 import { SelectorType } from "./types";
+import EvervaultClient from "../main";
 
 export type CardDetailsOptions = {
   theme?: ThemeDefinition;
@@ -26,9 +27,9 @@ export default class CardDetails {
   >;
   #events: EventTarget = new EventTarget();
 
-  constructor(app: string, options?: CardDetailsOptions) {
+  constructor(client: EvervaultClient, options?: CardDetailsOptions) {
     this.#options = options || {};
-    this.#frame = new EvervaultFrame(app, "CardDetails");
+    this.#frame = new EvervaultFrame(client, "CardDetails");
 
     // update the values when the frame sends a change event and dispatch
     // a change event.

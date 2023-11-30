@@ -6,11 +6,12 @@ import { EvervaultFrame } from "./evervaultFrame";
 import RevealCopyButton, { RevealCopyButtonOptions } from "./revealCopyButton";
 import RevealText, { RevealTextOptions } from "./revealText";
 import { generateID } from "./utils";
+import EvervaultClient from "../main";
 
 export default class Reveal {
-  app: string;
   ready: boolean = false;
   channel: string;
+  #client: EvervaultClient;
   #request: Request;
   #frame: EvervaultFrame<
     RevealRequestClientMessages,
@@ -19,11 +20,11 @@ export default class Reveal {
   consumers: (RevealText | RevealCopyButton)[] = [];
   #events: EventTarget = new EventTarget();
 
-  constructor(app: string, request: Request) {
-    this.app = app;
+  constructor(client: EvervaultClient, request: Request) {
     this.channel = generateID();
+    this.#client = client;
     this.#request = request;
-    this.#frame = new EvervaultFrame(app, "RevealRequest");
+    this.#frame = new EvervaultFrame(client, "RevealRequest");
     this.#frame.iframe.style.position = "absolute";
     this.#frame.iframe.style.pointerEvents = "none";
     this.#frame.iframe.style.opacity = "0";
@@ -74,13 +75,13 @@ export default class Reveal {
   }
 
   text(path: string, options?: RevealTextOptions) {
-    const text = new RevealText(this, path, options);
+    const text = new RevealText(this, this.#client, path, options);
     this.consumers.push(text);
     return text;
   }
 
   copyButton(path: string, options?: RevealCopyButtonOptions) {
-    const btn = new RevealCopyButton(this, path, options);
+    const btn = new RevealCopyButton(this, this.#client, path, options);
     this.consumers.push(btn);
     return btn;
   }

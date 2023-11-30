@@ -1,3 +1,4 @@
+import EvervaultClient from "../main";
 import { EvervaultFrame } from "./evervaultFrame";
 import Reveal from "./reveal";
 import {
@@ -26,12 +27,17 @@ export default class RevealCopyButton {
   >;
   #events: EventTarget = new EventTarget();
 
-  constructor(reveal: Reveal, path: string, options?: RevealCopyButtonOptions) {
+  constructor(
+    reveal: Reveal,
+    client: EvervaultClient,
+    path: string,
+    options?: RevealCopyButtonOptions
+  ) {
     this.path = path;
     this.#reveal = reveal;
     this.options = options || {};
 
-    this.#frame = new EvervaultFrame(reveal.app, "RevealCopyButton", {
+    this.#frame = new EvervaultFrame(client, "RevealCopyButton", {
       allow: "clipboard-read; clipboard-write",
     });
 

@@ -27,7 +27,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite build --watch & pnpm preview",
-    "preview": "wait-on dist/ && vite preview --port 4002",
+    "preview": "wait-on dist/ && vite preview",
     "coverage": "vitest --coverage",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
