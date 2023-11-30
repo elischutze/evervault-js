@@ -69,6 +69,8 @@ export default class CardDetails {
         this.#events.dispatchEvent(event);
       },
     });
+
+    return this;
   }
 
   update(options?: CardDetailsOptions) {
@@ -76,10 +78,12 @@ export default class CardDetails {
       this.#options = { ...this.#options, ...options };
     }
     this.#frame.update(this.config);
+    return this;
   }
 
   unmount() {
     this.#frame.unmount();
+    return this;
   }
 
   on(event: "ready", callback: () => void): void;
@@ -97,5 +101,6 @@ export default class CardDetails {
 
   validate() {
     this.#frame.send("EV_VALIDATE");
+    return this;
   }
 }

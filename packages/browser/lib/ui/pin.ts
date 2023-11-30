@@ -50,10 +50,13 @@ export default class Pin {
         this.#events.dispatchEvent(event);
       },
     });
+
+    return this;
   }
 
   unmount() {
     this.#frame.unmount();
+    return this;
   }
 
   update(options: PinOptions) {
@@ -61,6 +64,7 @@ export default class Pin {
       this.#options = { ...this.#options, ...options };
     }
     this.#frame.update(this.config);
+    return this;
   }
 
   on(event: "ready", callback: () => void): void;

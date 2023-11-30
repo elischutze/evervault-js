@@ -56,5 +56,6 @@ export default class RevealText {
 
   unmount() {
     this.#frame.unmount();
+    return this;
   }
 }

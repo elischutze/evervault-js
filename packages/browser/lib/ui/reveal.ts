@@ -89,6 +89,7 @@ export default class Reveal {
   unmount() {
     this.consumers.forEach((consumer) => consumer.unmount());
     this.#frame.unmount();
+    return this;
   }
 
   on(event: "ready", callback: () => void): void;

@@ -69,6 +69,7 @@ export default class RevealCopyButton {
 
   unmount() {
     this.#frame.unmount();
+    this this;
   }
 
   on(event: "copy", handler: () => void): void;

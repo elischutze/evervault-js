@@ -33,9 +33,9 @@ export class EvervaultFrame<
   #theme: Theme | null = null;
   #client: EvervaultClient;
 
-  // The constructor accepts the app and component name and generates the URL
-  // for the iframe passing both as a query params. The component params is
-  // used to determine which component to render in the iframe.
+  // The constructor accepts an EV client and component name and generates the URL
+  // for the iframe. The component param is used to determine which component to render
+  // in the iframe.
   constructor(
     client: EvervaultClient,
     component: string,
@@ -84,11 +84,14 @@ export class EvervaultFrame<
     this.iframe.onerror = opts.onError || null;
 
     element.appendChild(this.iframe);
+
+    return this;
   }
 
   unmount() {
     if (!this.iframe) return;
     this.iframe.remove();
+    return this;
   }
 
   // Takes an update configuration object and posts it into the iframe via an
@@ -110,6 +113,8 @@ export class EvervaultFrame<
       theme: this.#theme?.compile(),
       config: opts?.config,
     });
+
+    return this;
   }
 
   // The on method can be used to setup event listeners for messages sent from
