@@ -73,10 +73,12 @@ export function Pin({ config }: { config: PinConfig }) {
     const publishChange = async () => {
       if (!ev) return;
       const encrypted = await ev.encrypt(newPin);
-      messages.send("EV_CHANGE", {
-        isComplete: newPin.length === length,
-        value: encrypted,
-      });
+      const isComplete = newPin.length === length;
+      const payload = { isComplete, value: encrypted };
+      messages.send("EV_CHANGE", payload);
+      if (isComplete) {
+        messages.send("EV_COMPLETE", payload);
+      }
     };
 
     publishChange();

@@ -24,6 +24,12 @@ export default class Pin {
       this.#events.dispatchEvent(event);
     });
 
+    this.#frame.on("EV_COMPLETE", (payload) => {
+      this.values = payload;
+      const event = new CustomEvent("complete", { detail: payload });
+      this.#events.dispatchEvent(event);
+    });
+
     this.#frame.on("EV_FRAME_READY", () => {
       const event = new CustomEvent("ready");
       this.#events.dispatchEvent(event);
@@ -70,6 +76,7 @@ export default class Pin {
   on(event: "ready", callback: () => void): void;
   on(event: "error", callback: () => void): void;
   on(event: "change", callback: (payload: PinPayload) => void): void;
+  on(event: "complete", callback: (payload: PinPayload) => void): void;
   on(event: string, callback: Function) {
     const handler = (e: Event) => {
       callback((e as CustomEvent).detail);

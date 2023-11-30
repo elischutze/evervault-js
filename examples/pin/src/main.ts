@@ -15,4 +15,8 @@ comp.on("change", (values) => {
   console.log(values);
 });
 
+comp.on("complete", (values) => {
+  console.log("complete", values);
+});
+
 comp.mount("#form");

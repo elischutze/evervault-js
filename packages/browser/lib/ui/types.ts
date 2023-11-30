@@ -108,6 +108,7 @@ export type PinPayload = {
 
 export interface PinFrameClientMessages extends EvervaultFrameClientMessages {
   EV_CHANGE: PinPayload;
+  EV_COMPLETE: PinPayload;
 }
 
 export interface RevealRequestClientMessages
