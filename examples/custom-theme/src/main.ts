@@ -49,19 +49,20 @@ const theme = (
       position: "absolute",
     },
 
-    ".field[ev-valid=false]:first-child .error": {
+    ".field[ev-valid=false]:nth-child(1) .error": {
       display: "block",
     },
 
-    ".field[ev-valid=true] + .field[ev-valid=false] .error": {
+    "[ev-valid=true]:nth-child(1) + [ev-valid=false] .error": {
       display: "block",
     },
 
-    "fieldset:focus-within .field:first-child input": {
-      borderColor: "#63e",
-    },
+    "[ev-valid=true]:nth-child(1) + [ev-valid=true]:nth-child(2) + [ev-valid=false] .error":
+      {
+        display: "block",
+      },
 
-    '.field[data-name="expiry"] input': {
+    '.field[ev-name="expiry"] input': {
       top: 0,
       right: 60,
       width: "100px",
@@ -71,7 +72,7 @@ const theme = (
       transform: opts.showIcon ? "translateX(-50px)" : "translateX(0)",
     },
 
-    '.field[data-name="cvc"] input': {
+    '.field[ev-name="cvc"] input': {
       top: 0,
       right: 0,
       width: 80,
@@ -98,8 +99,8 @@ card.on("ready", () => {
 const cardIcon = document.querySelector(".card-icon");
 card.on("change", (values) => {
   console.log("change", values);
-  if (values.brand) {
-    cardIcon.dataset.type = values.brand;
+  if (values.card.brand) {
+    cardIcon.dataset.type = values.card.brand;
     cardIcon.classList.add("show");
     card.update({ theme: theme({ showIcon: true }) });
   } else {
