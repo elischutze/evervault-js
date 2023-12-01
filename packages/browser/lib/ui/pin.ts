@@ -4,7 +4,7 @@ import type {
   PinFrameClientMessages,
   EvervaultFrameHostMessages,
   PinOptions,
-} from "./types";
+} from "types";
 import { EvervaultFrame } from "./evervaultFrame";
 import EvervaultClient from "../main";
 

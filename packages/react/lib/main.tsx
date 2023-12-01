@@ -10,6 +10,7 @@ import * as React from "react";
 export { Reveal } from "./ui/Reveal";
 export { CardDetails } from "./ui/CardDetails";
 export { Pin } from "./ui/Pin";
+export { default as themes } from "themes";
 
 export interface CustomConfig extends BrowserConfig {
   jsSdkUrl: string;

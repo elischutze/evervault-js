@@ -1,6 +1,7 @@
 "use client";
 
-import { CardDetails } from "@evervault/react";
+import { CardDetails, themes } from "@evervault/react";
+const theme = themes.clean();
 
 export function ClientComponent() {
   const handleChange = (data) => {
@@ -14,7 +15,11 @@ export function ClientComponent() {
   return (
     <div>
       <h2>This is a client component</h2>
-      <CardDetails onChange={handleChange} onReady={handleReady} />
+      <CardDetails
+        theme={theme}
+        onChange={handleChange}
+        onReady={handleReady}
+      />
     </div>
   );
 }

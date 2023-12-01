@@ -1,4 +1,4 @@
-import { ThemeDefinition } from "../types";
+import { ThemeDefinition } from "types";
 
 export function clean(extended?: ThemeDefinition): ThemeDefinition {
   return (utils) => ({

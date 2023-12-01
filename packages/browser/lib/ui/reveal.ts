@@ -1,7 +1,7 @@
-import {
+import type {
   EvervaultFrameHostMessages,
   RevealRequestClientMessages,
-} from "./types";
+} from "types";
 import { EvervaultFrame } from "./evervaultFrame";
 import RevealCopyButton, { RevealCopyButtonOptions } from "./revealCopyButton";
 import RevealText, { RevealTextOptions } from "./revealText";

@@ -1,4 +1,4 @@
-import { ThemeDefinition } from "../types";
+import { ThemeDefinition } from "types";
 
 export function minimal(extended?: ThemeDefinition): ThemeDefinition {
   return (utils) => ({

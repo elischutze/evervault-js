@@ -1,13 +1,13 @@
 import EvervaultClient from "../main";
 import { EvervaultFrame } from "./evervaultFrame";
 import Reveal from "./reveal";
-import {
+import type {
   EvervaultFrameHostMessages,
   RevealConsumerClientMessages,
   RevealFormat,
   SelectorType,
   ThemeDefinition,
-} from "./types";
+} from "types";
 
 export type RevealTextOptions = {
   theme?: ThemeDefinition;

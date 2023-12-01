@@ -1,11 +1,11 @@
 import EvervaultClient from "../main";
 import { Theme } from "./theme";
-import {
+import type {
   EvervaultFrameClientMessages,
   EvervaultFrameHostMessages,
   SelectorType,
   ThemeDefinition,
-} from "./types";
+} from "types";
 import { generateID, resolveSelector } from "./utils";
 
 const FRAME_URL = import.meta.env.VITE_EVERVAULT_UI_COMPONENTS_URL;

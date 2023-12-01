@@ -40,6 +40,8 @@
   },
   "license": "MIT",
   "dependencies": {
+    "types": "workspace:^",
+    "themes": "workspace:^",
     "deepmerge": "^4.3.1",
     "events": "^3.3.0",
     "jss": "^10.10.0"

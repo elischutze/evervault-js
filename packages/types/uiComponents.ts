@@ -41,6 +41,13 @@ export type CardDetailsPayload = {
   }>;
 };
 
+export type CardDetailsOptions = {
+  theme?: ThemeDefinition;
+  autoFocus?: boolean;
+  hiddenFields?: CardDetailsField[];
+  translations?: Partial<CardDetailsTranslations>;
+};
+
 export type SwipedCardDetails = {
   brand: string | undefined;
   number: string | null;

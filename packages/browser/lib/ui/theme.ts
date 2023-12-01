@@ -1,4 +1,4 @@
-import { ThemeObject, ThemeStyles, ThemeDefinition } from "./types";
+import { ThemeObject, ThemeStyles, ThemeDefinition } from "types";
 import deepmerge from "deepmerge";
 import { EvervaultFrame } from "./evervaultFrame";
 

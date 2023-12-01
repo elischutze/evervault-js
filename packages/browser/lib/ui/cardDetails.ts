@@ -1,22 +1,13 @@
-import {
+import type {
   CardDetailsPayload,
-  CardDetailsTranslations,
-  CardDetailsField,
-  ThemeDefinition,
+  CardDetailsOptions,
   SwipedCardDetails,
   CardDetailsFrameClientMessages,
   CardDetailsFrameHostMessages,
-} from "./types";
+  SelectorType,
+} from "types";
 import { EvervaultFrame } from "./evervaultFrame";
-import { SelectorType } from "./types";
 import EvervaultClient from "../main";
-
-export type CardDetailsOptions = {
-  theme?: ThemeDefinition;
-  autoFocus?: boolean;
-  hiddenFields?: CardDetailsField[];
-  translations?: Partial<CardDetailsTranslations>;
-};
 
 export default class CardDetails {
   values?: CardDetailsPayload;
