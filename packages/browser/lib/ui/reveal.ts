@@ -7,7 +7,12 @@ import RevealCopyButton, { RevealCopyButtonOptions } from "./revealCopyButton";
 import RevealText, { RevealTextOptions } from "./revealText";
 import { generateID } from "./utils";
 import EvervaultClient from "../main";
+import EventManager from "./eventManager";
 
+// The reveal component mounts a hidden iFrame to the page and passes a request
+// object which gets carrier out inside of the hidden iFrame. The reveal component
+// then exposes child "consumer" components which render their own iframes that
+// communicate with the hidden iFrame to retrieve the data from the request response.
 export default class Reveal {
   ready: boolean = false;
   channel: string;
@@ -18,7 +23,7 @@ export default class Reveal {
     EvervaultFrameHostMessages
   >;
   consumers: (RevealText | RevealCopyButton)[] = [];
-  #events: EventTarget = new EventTarget();
+  #events = new EventManager();
 
   constructor(client: EvervaultClient, request: Request) {
     this.channel = generateID();
@@ -70,8 +75,7 @@ export default class Reveal {
   }
 
   #emitError() {
-    const event = new CustomEvent("error");
-    this.#events.dispatchEvent(event);
+    this.#events.dispatch("error");
   }
 
   text(path: string, options?: RevealTextOptions) {
@@ -95,21 +99,14 @@ export default class Reveal {
   on(event: "ready", callback: () => void): void;
   on(event: "error", callback: () => void): void;
   on(event: string, callback: Function) {
-    const handler = (e: Event) => {
-      callback((e as CustomEvent).detail);
-    };
-
-    this.#events.addEventListener(event, handler);
-    return () => {
-      this.#events.removeEventListener(event, handler);
-    };
+    return this.#events.on(event, callback);
   }
 
+  // Only emit the ready event when the request frame and all of its consumers are ready
   checkIfReady() {
     if (!this.ready) return;
     const consumersReady = this.consumers.every((consumer) => consumer.ready);
     if (!consumersReady) return;
-    const event = new CustomEvent("ready");
-    this.#events.dispatchEvent(event);
+    this.#events.dispatch("ready");
   }
 }

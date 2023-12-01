@@ -1,4 +1,5 @@
 import EvervaultClient from "../main";
+import EventManager from "./eventManager";
 import { EvervaultFrame } from "./evervaultFrame";
 import Reveal from "./reveal";
 import type {
@@ -25,7 +26,7 @@ export default class RevealCopyButton {
     RevealConsumerClientMessages,
     EvervaultFrameHostMessages
   >;
-  #events: EventTarget = new EventTarget();
+  #events = new EventManager();
 
   constructor(
     reveal: Reveal,
@@ -47,8 +48,7 @@ export default class RevealCopyButton {
     });
 
     this.#frame.on("EV_COPY", () => {
-      const event = new CustomEvent("copy");
-      this.#events.dispatchEvent(event);
+      this.#events.dispatch("copy");
     });
   }
 
@@ -74,13 +74,6 @@ export default class RevealCopyButton {
 
   on(event: "copy", handler: () => void): void;
   on(event: string, callback: Function) {
-    const handler = (e: Event) => {
-      callback((e as CustomEvent).detail);
-    };
-
-    this.#events.addEventListener(event, handler);
-    return () => {
-      this.#events.removeEventListener(event, handler);
-    };
+    return this.#events.on(event, callback);
   }
 }

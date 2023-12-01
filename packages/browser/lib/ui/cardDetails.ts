@@ -8,6 +8,7 @@ import type {
 } from "types";
 import { EvervaultFrame } from "./evervaultFrame";
 import EvervaultClient from "../main";
+import EventManager from "./eventManager";
 
 export default class CardDetails {
   values?: CardDetailsPayload;
@@ -16,7 +17,7 @@ export default class CardDetails {
     CardDetailsFrameClientMessages,
     CardDetailsFrameHostMessages
   >;
-  #events: EventTarget = new EventTarget();
+  #events = new EventManager();
 
   constructor(client: EvervaultClient, options?: CardDetailsOptions) {
     this.#options = options || {};
@@ -26,18 +27,15 @@ export default class CardDetails {
     // a change event.
     this.#frame.on("EV_CHANGE", (payload) => {
       this.values = payload;
-      const event = new CustomEvent("change", { detail: payload });
-      this.#events.dispatchEvent(event);
+      this.#events.dispatch("change", payload);
     });
 
     this.#frame.on("EV_SWIPE", (payload) => {
-      const event = new CustomEvent("swipe", { detail: payload });
-      this.#events.dispatchEvent(event);
+      this.#events.dispatch("swipe", payload);
     });
 
     this.#frame.on("EV_FRAME_READY", () => {
-      const event = new CustomEvent("ready");
-      this.#events.dispatchEvent(event);
+      this.#events.dispatch("ready");
     });
   }
 
@@ -56,8 +54,7 @@ export default class CardDetails {
     this.#frame.mount(selector, {
       ...this.config,
       onError: () => {
-        const event = new CustomEvent("error");
-        this.#events.dispatchEvent(event);
+        this.#events.dispatch("error");
       },
     });
 
@@ -82,12 +79,7 @@ export default class CardDetails {
   on(event: "change", callback: (payload: CardDetailsPayload) => void): void;
   on(event: "swipe", callback: (payload: SwipedCardDetails) => void): void;
   on(event: string, callback: Function) {
-    const handler = (e: Event) => {
-      callback((e as CustomEvent).detail);
-    };
-
-    this.#events.addEventListener(event, handler);
-    return () => this.#events.removeEventListener(event, handler);
+    return this.#events.on(event, callback);
   }
 
   validate() {

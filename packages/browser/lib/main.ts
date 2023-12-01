@@ -11,9 +11,9 @@ import {
 import type { InputSettings, RevealSettings } from "./types";
 import UIComponents from "./ui";
 
+export type * from "types";
 export type * from "./config";
 export type * from "./types";
-export type * from "types";
 export type * from "./messages";
 export type { Datatypes };
 

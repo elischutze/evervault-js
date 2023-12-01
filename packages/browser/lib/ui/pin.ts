@@ -7,12 +7,13 @@ import type {
 } from "types";
 import { EvervaultFrame } from "./evervaultFrame";
 import EvervaultClient from "../main";
+import EventManager from "./eventManager";
 
 export default class Pin {
   values: any = {};
   #options: PinOptions;
   #frame: EvervaultFrame<PinFrameClientMessages, EvervaultFrameHostMessages>;
-  #events: EventTarget = new EventTarget();
+  #events = new EventManager();
 
   constructor(client: EvervaultClient, options?: PinOptions) {
     this.#options = options || {};
@@ -20,19 +21,16 @@ export default class Pin {
 
     this.#frame.on("EV_CHANGE", (payload) => {
       this.values = payload;
-      const event = new CustomEvent("change", { detail: payload });
-      this.#events.dispatchEvent(event);
+      this.#events.dispatch("change", payload);
     });
 
     this.#frame.on("EV_COMPLETE", (payload) => {
       this.values = payload;
-      const event = new CustomEvent("complete", { detail: payload });
-      this.#events.dispatchEvent(event);
+      this.#events.dispatch("complete", payload);
     });
 
     this.#frame.on("EV_FRAME_READY", () => {
-      const event = new CustomEvent("ready");
-      this.#events.dispatchEvent(event);
+      this.#events.dispatch("ready");
     });
   }
 
@@ -52,8 +50,7 @@ export default class Pin {
     this.#frame.mount(selector, {
       ...this.config,
       onError: () => {
-        const event = new CustomEvent("error");
-        this.#events.dispatchEvent(event);
+        this.#events.dispatch("error");
       },
     });
 
@@ -78,13 +75,6 @@ export default class Pin {
   on(event: "change", callback: (payload: PinPayload) => void): void;
   on(event: "complete", callback: (payload: PinPayload) => void): void;
   on(event: string, callback: Function) {
-    const handler = (e: Event) => {
-      callback((e as CustomEvent).detail);
-    };
-
-    this.#events.addEventListener(event, handler);
-    return () => {
-      this.#events.removeEventListener(event, handler);
-    };
+    return this.#events.on(event, callback);
   }
 }
