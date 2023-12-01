@@ -1,26 +1,27 @@
 import * as React from "react";
 import {
   ReactNode,
-  RefObject,
   createContext,
   useContext,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
 import { useEventListener } from "./useEventListener";
 import { useEvervault } from "../main";
 import Evervault from "@evervault/browser";
-import { ThemeDefinition } from "@evervault/browser";
-import { RevealFormat } from "@evervault/browser";
-
-type RevealContextType = {
-  reveal: RefObject<RevealClass | null>;
-};
+import { RevealText } from "./RevealText";
+import { RevealCopyButton } from "./RevealCopyButton";
 
 type RevealClass = ReturnType<Evervault["ui"]["reveal"]>;
-const RevealContext = createContext<RevealContextType | undefined>(undefined);
+
+export type RevealContextType = {
+  reveal: RevealClass | null;
+};
+
+export const RevealContext = createContext<RevealContextType | undefined>(
+  undefined
+);
 
 export interface RevealProps {
   request: Request;
@@ -61,13 +62,7 @@ function Reveal({ request, children, onReady, onError }: RevealProps) {
   );
 }
 
-type RevealTextProps = {
-  path: string;
-  theme?: ThemeDefinition;
-  format?: RevealFormat;
-};
-
-function useRevealContext() {
+export function useRevealContext() {
   const context = useContext(RevealContext);
 
   if (!context) {
@@ -77,63 +72,7 @@ function useRevealContext() {
   return context;
 }
 
-type RevealTextClass = ReturnType<Evervault["ui"]["reveal"]["text"]>;
-
-function RevealText({ path, theme, format }: RevealTextProps) {
-  const [instance, setInstance] = useState<RevealTextClass | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
-  const { reveal } = useRevealContext();
-
-  useLayoutEffect(() => {
-    if (!ref.current || instance || !reveal) return;
-
-    async function init() {
-      const inst = reveal.text(path, {
-        theme,
-        format,
-      });
-      inst.mount(ref.current);
-      setInstance(inst);
-    }
-
-    init();
-  }, [reveal, path, theme, format, instance]);
-
-  return <div ref={ref} />;
-}
-
 Reveal.Text = RevealText;
-
-type RevealCopyButtonClass = ReturnType<
-  Evervault["ui"]["reveal"]["copyButton"]
->;
-
-export type RevealCopyButtonProps = {
-  path: string;
-  onCopy?: () => void;
-};
-
-function RevealCopyButton({ path, ...options }: RevealCopyButtonProps) {
-  const [instance, setInstance] = useState<RevealCopyButtonClass | null>(null);
-  const ref = useRef<HTMLDivElement>(null);
-  const { reveal } = useRevealContext();
-  useEventListener(instance, "copy", options.onCopy);
-
-  useLayoutEffect(() => {
-    if (!ref.current || instance || !reveal) return;
-
-    async function init() {
-      const inst = reveal.copyButton(path, options);
-      inst.mount(ref.current);
-      setInstance(inst);
-    }
-
-    init();
-  }, [reveal, path, options, instance]);
-
-  return <div ref={ref} />;
-}
-
 Reveal.CopyButton = RevealCopyButton;
 
 export { Reveal };

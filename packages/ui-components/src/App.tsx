@@ -1,7 +1,4 @@
-import jss, { JssStyle, StyleSheet } from "jss";
-import type { ThemeObject } from "@evervault/browser";
 import { EvervaultProvider } from "@evervault/react";
-import preset from "jss-preset-default";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Pin } from "./Pin";
 import { CardDetails } from "./CardDetails";
@@ -11,8 +8,7 @@ import { useMessaging } from "./utilities/useMessaging";
 import { RevealRequest } from "./Reveal/RevealRequest";
 import { RevealText } from "./Reveal/RevealText";
 import { RevealCopyButton } from "./Reveal/RevealCopyButton";
-
-jss.setup(preset());
+import { useTheme } from "./utilities/useTheme";
 
 const COMPONENTS = {
   Pin,
@@ -23,15 +19,14 @@ const COMPONENTS = {
 };
 
 export default function App() {
+  const setTheme = useTheme();
   const initialized = useRef(false);
-  const styles = useRef<StyleSheet | null>(null);
-  const [theme, setTheme] = useState<ThemeObject | null>(null);
   const [config, setConfig] = useState<any | null>(null);
   const { on, send } = useMessaging();
   const { team, app, component } = useSearchParams();
 
-  if (!app || !component) {
-    throw new Error("Missing app or component");
+  if (!team || !app || !component) {
+    throw new Error("Missing team, app or component");
   }
 
   useLayoutEffect(resize);
@@ -50,7 +45,7 @@ export default function App() {
       setConfig(payload.config);
       send("EV_FRAME_READY");
     });
-  }, [on, send]);
+  }, [on, send, setTheme]);
 
   useEffect(() => {
     return on("EV_UPDATE", (payload) => {
@@ -59,25 +54,7 @@ export default function App() {
         setConfig(payload.config);
       }
     });
-  }, [on]);
-
-  useEffect(() => {
-    if (!theme) return;
-
-    const opts = {
-      "@import": (theme.fonts || []).map((url) => `url(${url})`) as JssStyle[],
-      "@global": theme.styles,
-    };
-
-    if (styles.current) {
-      styles.current.detach();
-    }
-
-    styles.current = jss.createStyleSheet(opts);
-    styles.current.attach();
-
-    resize();
-  }, [theme]);
+  }, [on, setTheme]);
 
   if (!config) return null;
 

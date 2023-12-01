@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "clean": "rm -rf .turbo && rm -rf dist"
+    "clean": "rm -rf .turbo && rm -rf dist",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@evervault/browser": "workspace:*",

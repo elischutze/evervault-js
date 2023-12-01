@@ -12,7 +12,7 @@ export type UseFormReturn<T> = {
     name: K
   ) => {
     onChange: (value: T[K]) => void;
-    onBlur: () => void;
+    onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   };
 };
 

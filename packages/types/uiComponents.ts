@@ -11,6 +11,7 @@ export type ThemeObject = {
 
 export type ThemeUtilities = {
   media: (property: string, styles: ThemeStyles) => {};
+  extend: (theme: ThemeDefinition) => {};
 };
 
 export type ThemeFunction = (utilities: ThemeUtilities) => ThemeObject;

@@ -1,6 +1,16 @@
 import IMask from "imask";
 import { IMaskInput } from "react-imask";
 import { CardDetailsForm } from ".";
+import { FocusEvent } from "react";
+
+type CardExpiryProps = {
+  onChange: (value: CardDetailsForm["expiry"]) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+  disabled: boolean;
+  placeholder?: string;
+  value: string;
+  readOnly?: boolean;
+};
 
 export function CardExpiry({
   onChange,
@@ -9,14 +19,7 @@ export function CardExpiry({
   placeholder,
   value,
   readOnly,
-}: {
-  onChange: (value: CardDetailsForm["expiry"]) => void;
-  onBlur?: () => void;
-  disabled: boolean;
-  placeholder?: string;
-  value: string;
-  readOnly?: boolean;
-}) {
+}: CardExpiryProps) {
   return (
     <IMaskInput
       unmask

@@ -1,4 +1,15 @@
+import { FocusEvent } from "react";
 import { IMaskInput } from "react-imask";
+
+type CardNumberProps = {
+  disabled?: boolean;
+  autoFocus?: boolean;
+  onChange: (v: string) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+  placeholder: string;
+  value: string;
+  readOnly?: boolean;
+};
 
 export function CardNumber({
   autoFocus,
@@ -8,15 +19,7 @@ export function CardNumber({
   placeholder,
   value,
   readOnly,
-}: {
-  disabled?: boolean;
-  autoFocus?: boolean;
-  onChange: (v: string) => void;
-  onBlur?: () => void;
-  placeholder: string;
-  value: string;
-  readOnly?: boolean;
-}) {
+}: CardNumberProps) {
   return (
     <IMaskInput
       unmask

@@ -1,9 +1,9 @@
-import { forwardRef } from "react";
+import { FocusEvent, forwardRef } from "react";
 import { IMaskInput } from "react-imask";
 
 type CVCProps = {
   onChange: (v: string) => void;
-  onBlur?: () => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   disabled: boolean;
   placeholder?: string;
   value: string;
