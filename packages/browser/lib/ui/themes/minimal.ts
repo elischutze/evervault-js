@@ -59,50 +59,72 @@ export function minimal(extended?: ThemeDefinition): ThemeDefinition {
         display: "none",
       },
 
-      ".field[ev-valid=false]:nth-child(1) .error": {
-        display: "block",
-      },
-
-      "[ev-valid=true]:nth-child(1) + [ev-valid=false] .error": {
-        display: "block",
-      },
-
-      "[ev-valid=true]:nth-child(1) + [ev-valid=true]:nth-child(2) + [ev-valid=false] .error":
-        {
-          display: "block",
-        },
-
-      "[ev-component=cardDetails]": {
-        gap: 0,
-      },
-
-      "[ev-name=number]": {
-        marginBottom: "-1px",
-
-        "& input": {
-          borderTopLeftRadius: 6,
-          borderTopRightRadius: 6,
-        },
-      },
-
-      ".field:nth-child(2) input": {
-        borderBottomLeftRadius: 6,
-      },
-
-      ".field:nth-child(3)": {
-        marginLeft: "-1px",
-      },
-
-      ".field:last-child input": {
-        borderBottomRightRadius: 6,
-      },
-
       ".field[ev-valid=false]": {
         zIndex: 4,
       },
 
       ".field:focus-within": {
         zIndex: 5,
+      },
+
+      "[ev-component=cardDetails]": {
+        gap: 0,
+
+        "& .field[ev-valid=false]:nth-child(1) .error": {
+          display: "block",
+        },
+
+        "& [ev-valid=true]:nth-child(1) + [ev-valid=false] .error": {
+          display: "block",
+        },
+
+        "& [ev-valid=true]:nth-child(1) + [ev-valid=true]:nth-child(2) + [ev-valid=false] .error":
+          {
+            display: "block",
+          },
+
+        "& [ev-name=number]": {
+          marginBottom: "-1px",
+
+          "& input": {
+            borderTopLeftRadius: 6,
+            borderTopRightRadius: 6,
+          },
+        },
+
+        "& .field:nth-child(2) input": {
+          borderBottomLeftRadius: 6,
+        },
+
+        "& .field:nth-child(3)": {
+          marginLeft: "-1px",
+        },
+
+        "& .field:last-child input": {
+          borderBottomRightRadius: 6,
+        },
+      },
+
+      "[ev-component=pin]": {
+        gap: 0,
+
+        "& input": {
+          height: 60,
+        },
+
+        "& .field:not(:first-child)": {
+          marginLeft: "-1px",
+        },
+
+        "& .field:first-child input": {
+          borderTopLeftRadius: 6,
+          borderBottomLeftRadius: 6,
+        },
+
+        "& .field:last-child input": {
+          borderTopRightRadius: 6,
+          borderBottomRightRadius: 6,
+        },
       },
 
       ...(extended ? utils.extend(extended) : {}),

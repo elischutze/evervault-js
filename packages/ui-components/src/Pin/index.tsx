@@ -101,7 +101,7 @@ export function Pin({ config }: { config: PinConfig }) {
       onPaste={handlePaste}
     >
       {Array.from({ length }).map((_, i) => (
-        <Field key={i}>
+        <Field key={i} hasValue={pin[i] !== undefined}>
           <PinInput
             value={pin[i] || ""}
             onChange={handleChange}

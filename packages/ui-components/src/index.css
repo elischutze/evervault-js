@@ -50,7 +50,7 @@ input {
   grid-column: auto;
 }
 
-fieldset[ev-component="pin"] {
+[ev-component="pin"] {
   gap: 10px;
   display: flex;
 

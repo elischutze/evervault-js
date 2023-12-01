@@ -81,8 +81,8 @@ button.addEventListener("click", () => {
     .text("$.card.number", {
       theme,
       format: {
-        regex: /(.{4})/g,
-        replace: "$1 ",
+        regex: /(.{4})(.{4})(.{4})(.{4})/g,
+        replace: "$1 $2 $3 $4",
       },
     })
     .mount(".back .number .value");

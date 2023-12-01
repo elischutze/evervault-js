@@ -46,6 +46,11 @@ export function clean(extended?: ThemeDefinition): ThemeDefinition {
       "[ev-component=cardDetails]": {
         gap: 16,
       },
+      "[ev-component=pin] input": {
+        height: 80,
+        fontSize: 20,
+        caretColor: "transparent",
+      },
       ...(extended ? utils.extend(extended) : {}),
     },
   });
